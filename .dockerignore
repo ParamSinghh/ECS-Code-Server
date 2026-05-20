@@ -1,0 +1,27 @@
+# Git files - not needed in the container
+.git
+.gitignore
+
+# Terraform - not needed in the container
+infra/
+*.tfstate
+*.tfvars
+.terraform/
+
+# AWS CLI installer
+awscliv2.zip
+aws/
+
+# Environment files
+.env
+*.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# README
+*.md
