@@ -63,10 +63,7 @@ resource "aws_route_table" "public" {
 # Link the route table to each subnet
 # Without this the subnets wouldn't know to use the route table
 resource "aws_route_table_association" "public" {
-  # Do this for each subnet we created
-  count          = length(aws_subnet.public)
-  # Get the subnet ID for each one
+  count          = length(var.public_subnet_cidrs)
   subnet_id      = aws_subnet.public[count.index].id
-  # Link it to our route table
   route_table_id = aws_route_table.public.id
 }

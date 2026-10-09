@@ -18,21 +18,18 @@ resource "aws_acm_certificate" "this" {
 # Create the DNS validation record in Route 53
 # This proves to AWS that you own the domain
 resource "aws_route53_record" "cert_validation" {
-  # Loop through each domain validation option
   for_each = {
-    for dvo in aws_acm_certificate.this.domain_validation_options : dvo.domain_name => {
+    for dvo in tolist(aws_acm_certificate.this.domain_validation_options) : dvo.domain_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
       type   = dvo.resource_record_type
     }
   }
 
-  # The hosted zone to add the validation record to
   zone_id = var.hosted_zone_id
   name    = each.value.name
   type    = each.value.type
   records = [each.value.record]
-  # Short TTL so it validates quickly
   ttl     = 60
 }
 
